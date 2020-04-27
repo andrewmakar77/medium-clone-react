@@ -1,6 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { PageLayout } from 'components';
+
+const App = () => {
+  return (
+    <Router>
+      <PageLayout/>
+    </Router>
+  );
+}
+
+export default App;
+
 
 ReactDOM.render(
   <React.StrictMode>
