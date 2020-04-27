@@ -1,12 +1,12 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import { FEED, ARTICLES } from 'constants/routes';
+import { HOME, ARTICLES } from 'constants/routes';
 import { GlobalFeeds, Articles } from 'pages';
 
 export const Routes = () => {
   return (
     <Switch>
-      <Route path={FEED} component={GlobalFeeds} exact />
+      <Route path={HOME} component={GlobalFeeds} exact />
       <Route path={ARTICLES} component={Articles} />
     </Switch>
   )
