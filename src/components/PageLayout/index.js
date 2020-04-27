@@ -1,10 +1,11 @@
 import React from 'react';
 import { Routes } from 'routes';
+import { TopBar } from 'components';
 
 export const PageLayout = () => {
   return (
     <>
-      <h1>Medium clone</h1>
+      <TopBar/>
       <Routes/>
     </>
   )
