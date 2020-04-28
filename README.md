@@ -1,5 +1,3 @@
-![CI](https://github.com/andrewmakar77/medium-clone/workflows/CI/badge.svg?event=deployment_status)
-
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
