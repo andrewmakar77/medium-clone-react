@@ -1,7 +1,7 @@
 import { HOME, LOGIN, REGISTER } from 'constants/routes';
 
 export const LINKS_CONFIG = [
-  { path: HOME, label: 'Home' },
-  { path: LOGIN, label: 'Sign In' },
-  { path: REGISTER, label: 'Sign Up' }
+  { id: 1, path: HOME, label: 'Home' },
+  { id: 2, path: LOGIN, label: 'Sign In' },
+  { id: 3, path: REGISTER, label: 'Sign Up' }
 ];
