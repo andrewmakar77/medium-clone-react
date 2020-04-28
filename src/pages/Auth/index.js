@@ -1,22 +1,32 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useAxios } from 'hooks';
-import { REGISTER } from 'constants/routes';
+import { REGISTER, LOGIN } from 'constants/routes';
 
 export const Auth = () => {
+  const { pathname } = useLocation();
+  const isLogin = pathname === LOGIN;
+  const apiUrl = isLogin ? 'users/login' : 'users';
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [{isLoading}, doFetch] = useAxios('users/login');
+  const [username, setUsername] = useState('');
+  const [{isLoading}, doFetch] = useAxios(apiUrl);
+
+  const pageText = isLogin ? 'Sign In' : 'Sign Up';
+  const descriptionText = isLogin ? 'Need an account?' : 'Have an account?';
+  const descriptionLink = isLogin ? REGISTER : LOGIN;
   
   const handleEmail = ({target: { value }}) => setEmail(value);
   const handlePassword = ({target: { value }}) => setPassword(value);
+  const handleUsername = ({target: { value }}) => setUsername(value);
   const handleSubmit = (e) => {
     e.preventDefault(); 
+    
+    const user = isLogin ? { email, password } : { username, email, password };
+    
     doFetch({
       method: 'POST',
-      data: {
-        user: { email, password }
-      }
+      data: { user }
     })
   };
 
@@ -25,12 +35,23 @@ export const Auth = () => {
       <div className="container page">
         <div className="row">
           <div className="col-md-6 offset-md-3 col-xs-12">
-            <h1 className="text-xs-center">Login</h1>
+            <h1 className="text-xs-center">{pageText}</h1>
             <p className="text-xs-center">
-              <Link to={REGISTER}>Need an account?</Link>
+              <Link to={descriptionLink}>{descriptionText}</Link>
             </p>
             <form onSubmit={handleSubmit}>
               <fieldset>
+                { !isLogin && (
+                  <fieldset className="form-group">
+                    <input
+                      type="text"
+                      className="form-control form-control-lg"
+                      placeholder="Username"
+                      value={username}
+                      onChange={handleUsername}
+                    />
+                  </fieldset>
+                ) }
                 <fieldset className="form-group">
                   <input
                     type="email"
@@ -54,7 +75,7 @@ export const Auth = () => {
                   className="btn btn-lg btn-primary pull-xs-right"
                   disabled={isLoading}
                 >
-                  Sign In
+                  {pageText}
                 </button>
               </fieldset>
             </form>
