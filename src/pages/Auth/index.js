@@ -6,7 +6,7 @@ import { REGISTER } from 'constants/routes';
 export const Auth = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [{isLoading, response, errors}, doFetch] = useAxios('users/login');
+  const [{isLoading}, doFetch] = useAxios('users/login');
   
   const handleEmail = ({target: { value }}) => setEmail(value);
   const handlePassword = ({target: { value }}) => setPassword(value);
