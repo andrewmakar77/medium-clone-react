@@ -1,16 +1,23 @@
-import React, {useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useAxios } from 'hooks';
 import { REGISTER } from 'constants/routes';
 
 export const Auth = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
+  const [{isLoading, response, errors}, doFetch] = useAxios('users/login');
+  
   const handleEmail = ({target: { value }}) => setEmail(value);
   const handlePassword = ({target: { value }}) => setPassword(value);
   const handleSubmit = (e) => {
     e.preventDefault(); 
-    console.log('Email:', email, 'Password:', password)
+    doFetch({
+      method: 'POST',
+      data: {
+        user: { email, password }
+      }
+    })
   };
 
   return (
@@ -42,7 +49,13 @@ export const Auth = () => {
                     onChange={handlePassword}
                   />
                 </fieldset>
-                <button type="submit" className="btn btn-lg btn-primary pull-xs-right">Sign In</button>
+                <button
+                  type="submit"
+                  className="btn btn-lg btn-primary pull-xs-right"
+                  disabled={isLoading}
+                >
+                  Sign In
+                </button>
               </fieldset>
             </form>
           </div>
