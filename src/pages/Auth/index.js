@@ -1,40 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useAxios } from 'hooks';
 import { REGISTER } from 'constants/routes';
-import { httpClient } from 'core/axios';
 
 export const Auth = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  useEffect(() => {
-    if (!isSubmitting) {
-      return;
-    }
-
-    login();
-  });
-
+  const [{isLoading, response, errors}, doFetch] = useAxios('users/login');
+  
   const handleEmail = ({target: { value }}) => setEmail(value);
   const handlePassword = ({target: { value }}) => setPassword(value);
   const handleSubmit = (e) => {
     e.preventDefault(); 
-    setIsSubmitting(true);
-  };
-
-  const login = () => {
-    try {
-      const result = httpClient.post('users/login', {
+    doFetch({
+      method: 'POST',
+      data: {
         user: { email, password }
-      });
-      console.log(result, 'result');
-    } catch (error) {
-      console.error(error, 'error');
-    } finally {
-      setIsSubmitting(false);
-    }
-  }
+      }
+    })
+  };
 
   return (
     <div className="auth-page">
@@ -68,7 +52,7 @@ export const Auth = () => {
                 <button
                   type="submit"
                   className="btn btn-lg btn-primary pull-xs-right"
-                  disabled={isSubmitting}
+                  disabled={isLoading}
                 >
                   Sign In
                 </button>
