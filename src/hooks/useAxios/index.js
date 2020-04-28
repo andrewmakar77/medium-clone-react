@@ -26,7 +26,7 @@ export const useAxios = url => {
       setIsLoading(false);
     }
 
-  }, [isLoading]);
+  }, [isLoading, url, options]);
 
   return [{isLoading, response, errors}, doFetch];
 }
