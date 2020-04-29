@@ -2,12 +2,15 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { PageLayout } from 'components';
+import { CurrentUserProvider } from 'contexts';
 
 const App = () => {
   return (
-    <Router>
-      <PageLayout/>
-    </Router>
+    <CurrentUserProvider>
+      <Router>
+        <PageLayout/>
+      </Router>
+    </CurrentUserProvider>
   );
 }
 
