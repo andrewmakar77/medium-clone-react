@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, Redirect } from 'react-router-dom';
-import { useAxios } from 'hooks';
+import { useAxios, useLocalStorage } from 'hooks';
 import { REGISTER, LOGIN, HOME } from 'constants/routes';
 
 export const Auth = () => {
@@ -12,10 +12,11 @@ export const Auth = () => {
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
   const [{isLoading, response}, doFetch] = useAxios(apiUrl);
-
+  const [token, setToken] = useLocalStorage('auth-token');
+  
   useEffect(() => {    
     if (response) {
-      setToken(response);
+      setToken(response.user.token);
       setSubmitted(true);
     }
   }, [response])
@@ -37,7 +38,6 @@ export const Auth = () => {
       data: { user }
     })
   };
-  const setToken = ({user: { token }}) => localStorage.setItem('auth-token', token);
 
   if (isSubmitted) {
     return <Redirect to={HOME} />;
@@ -90,6 +90,7 @@ export const Auth = () => {
                 >
                   {pageText}
                 </button>
+                {token}
               </fieldset>
             </form>
           </div>
