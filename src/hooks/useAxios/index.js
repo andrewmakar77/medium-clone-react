@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { httpClient } from 'core/axios';
 
 export const useAxios = url => {
@@ -7,10 +7,13 @@ export const useAxios = url => {
   const [errors, setErrors] = useState(null);
   const [options, setOptions] = useState({});
 
-  const doFetch = (options = {}) => {
-    setOptions(options);
-    setIsLoading(true);
-  };
+  const doFetch = useCallback(
+    (options = {}) => {
+      setOptions(options);
+      setIsLoading(true);
+    },
+    []
+  );
 
   useEffect(() => {
     if (!isLoading) {
