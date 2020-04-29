@@ -17,15 +17,18 @@ export const useAxios = url => {
       return;
     }
 
-    try {
-      const res = httpClient(url, options);
-      setResponse(res.data)
-    } catch (err) {
-      setErrors(err.response.data)
-    } finally {
-      setIsLoading(false);
+    const fetchData = async () => {
+      try {
+        const { data } = await httpClient(url, options);        
+        setResponse(data);
+      } catch ({response: {data}}) {
+        setErrors(data)
+      } finally {
+        setIsLoading(false);
+      }
     }
 
+    fetchData();
   }, [isLoading, url, options]);
 
   return [{isLoading, response, errors}, doFetch];
