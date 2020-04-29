@@ -3,6 +3,7 @@ import { Link, useLocation, Redirect } from 'react-router-dom';
 import { useAxios, useLocalStorage } from 'hooks';
 import { REGISTER, LOGIN, HOME } from 'constants/routes';
 import { CurrentUserContext } from 'contexts';
+import { ErrorMessages } from 'components';
 
 export const Auth = () => {
   const { pathname } = useLocation();
@@ -12,7 +13,7 @@ export const Auth = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
-  const [{isLoading, response}, doFetch] = useAxios(apiUrl);
+  const [{isLoading, response, errors}, doFetch] = useAxios(apiUrl);
   const [ , setToken] = useLocalStorage('auth-token');
   const [ , setCurrentUserState] = useContext(CurrentUserContext);
   
@@ -50,7 +51,7 @@ export const Auth = () => {
   if (isSubmitted) {
     return <Redirect to={HOME} />;
   }
-
+  
   return (
     <div className="auth-page">
       <div className="container page">
@@ -61,6 +62,7 @@ export const Auth = () => {
               <Link to={descriptionLink}>{descriptionText}</Link>
             </p>
             <form onSubmit={handleSubmit}>
+              { errors && <ErrorMessages errors={errors.errors} /> }
               <fieldset>
                 { !isLogin && (
                   <fieldset className="form-group">
