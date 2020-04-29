@@ -1,15 +1,41 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import { LINKS_CONFIG } from './config';
+import { CurrentUserContext } from 'contexts';
 
-const List = () => LINKS_CONFIG.map((link) => (
-  <li className="nav-item" key={link.id}>
-    <NavLink to={link.path} exact className="nav-link">{link.label}</NavLink>
-  </li>
-));
+export const NavigationList = () => {
+  const [currentUserState] = useContext(CurrentUserContext);
 
-export const NavigationList = () => (
-  <ul className="nav navbar-nav pull-xs-right">
-    <List/>
-  </ul>
-);
+  return (
+    <ul className="nav navbar-nav pull-xs-right">
+      <li className="nav-item">
+        <NavLink to={LINKS_CONFIG.home.path} className="nav-link" exact>{LINKS_CONFIG.home.label}</NavLink>
+      </li>
+      { !currentUserState.isLoggedIn ? 
+        <>
+          <li className="nav-item">
+            <NavLink to={LINKS_CONFIG.login.path} className="nav-link">{LINKS_CONFIG.login.label}</NavLink>
+          </li>
+          <li className="nav-item">
+            <NavLink to={LINKS_CONFIG.register.path} className="nav-link">{LINKS_CONFIG.register.label}</NavLink>
+          </li>
+        </> :
+        <>
+          <li className="nav-item">
+            <NavLink to={LINKS_CONFIG.articlesNew.path} className="nav-link">
+              <i className="ion-compose"/>
+              &nbsp;
+              {LINKS_CONFIG.articlesNew.label}
+            </NavLink>
+          </li>
+          <li className="nav-item">
+            <NavLink to={`${LINKS_CONFIG.profile.path}/${currentUserState.currentUser.username}`} className="nav-link">
+              <img className="user-pic" src={currentUserState.currentUser.image} alt=""/>
+              {currentUserState.currentUser.username}
+            </NavLink>
+          </li>
+        </>
+      }
+    </ul>
+  );
+};

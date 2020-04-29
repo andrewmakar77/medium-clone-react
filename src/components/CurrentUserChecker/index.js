@@ -1,24 +1,24 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useContext } from 'react';
 import { useAxios, useLocalStorage } from 'hooks';
 import { CurrentUserContext } from 'contexts';
 
 export const CurrentUserChecker = ({children}) => {
   const [token] = useLocalStorage('auth-token');
-  const [{isLoading, response}, doFetch] = useAxios('user');
+  const [{response}, doFetch] = useAxios('user');
   const [, setCurrentUserState] = useContext(CurrentUserContext);
 
   useEffect(() => {
     if (!token) {
       return;
     }
-    
+
     doFetch();
     setCurrentUserState(state => ({
       ...state,
-      isLoading
+      isLoading: true,
+      isLoggedIn: false
     }));
-  }, []);
+  }, [token, setCurrentUserState, doFetch]);
 
   useEffect(() => {
     if (!response) {
@@ -27,11 +27,11 @@ export const CurrentUserChecker = ({children}) => {
     
     setCurrentUserState(state => ({
       ...state,
-      isLoading,
+      isLoading: false,
       isLoggedIn: true,
       currentUser: response.user
     }));
-  }, [response]);
+  }, [response, setCurrentUserState]);
 
 
   return <>{children}</>;

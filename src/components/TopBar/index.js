@@ -7,7 +7,7 @@ export const TopBar = () => {
   return (
     <nav className="navbar navbar-light">
       <div className="container">
-        <Link to={HOME} className="nav-link">Medium</Link>
+        <Link to={HOME} className="navbar-brand">Medium</Link>
         <NavigationList/>
       </div>
     </nav>
