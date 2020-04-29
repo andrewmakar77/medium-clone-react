@@ -7,7 +7,7 @@ export const useLocalStorage = key => {
     if (value) {
       localStorage.setItem(key, value);
     }
-  }, [value])
+  }, [value, key])
 
   return [value, setValue];
 }

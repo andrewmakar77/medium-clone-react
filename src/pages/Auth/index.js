@@ -12,14 +12,14 @@ export const Auth = () => {
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
   const [{isLoading, response}, doFetch] = useAxios(apiUrl);
-  const [token, setToken] = useLocalStorage('auth-token');
+  const [ , setToken] = useLocalStorage('auth-token');
   
   useEffect(() => {    
     if (response) {
       setToken(response.user.token);
       setSubmitted(true);
     }
-  }, [response])
+  }, [response, setToken])
 
   const pageText = isLogin ? 'Sign In' : 'Sign Up';
   const descriptionText = isLogin ? 'Need an account?' : 'Have an account?';
@@ -90,7 +90,6 @@ export const Auth = () => {
                 >
                   {pageText}
                 </button>
-                {token}
               </fieldset>
             </form>
           </div>
