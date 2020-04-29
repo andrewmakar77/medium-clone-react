@@ -14,8 +14,8 @@ export const Auth = () => {
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
   const [{isLoading, response, errors}, doFetch] = useAxios(apiUrl);
-  const [ , setToken] = useLocalStorage('auth-token');
-  const [ , setCurrentUserState] = useContext(CurrentUserContext);
+  const [, setToken] = useLocalStorage('auth-token');
+  const [, setCurrentUserState] = useContext(CurrentUserContext);
   
   useEffect(() => {    
     if (response) {

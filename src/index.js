@@ -1,15 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { PageLayout } from 'components';
+import { PageLayout, CurrentUserChecker } from 'components';
 import { CurrentUserProvider } from 'contexts';
 
 const App = () => {
   return (
     <CurrentUserProvider>
-      <Router>
-        <PageLayout/>
-      </Router>
+      <CurrentUserChecker>
+        <Router>
+          <PageLayout/>
+        </Router>
+      </CurrentUserChecker>
     </CurrentUserProvider>
   );
 }
