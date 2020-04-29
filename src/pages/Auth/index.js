@@ -1,16 +1,25 @@
-import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { useAxios } from 'hooks';
-import { REGISTER, LOGIN } from 'constants/routes';
+import React, { useState, useEffect } from 'react';
+import { Link, useLocation, Redirect } from 'react-router-dom';
+import { useAxios, useLocalStorage } from 'hooks';
+import { REGISTER, LOGIN, HOME } from 'constants/routes';
 
 export const Auth = () => {
   const { pathname } = useLocation();
   const isLogin = pathname === LOGIN;
   const apiUrl = isLogin ? 'users/login' : 'users';
+  const [isSubmitted, setSubmitted] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
-  const [{isLoading}, doFetch] = useAxios(apiUrl);
+  const [{isLoading, response}, doFetch] = useAxios(apiUrl);
+  const [ , setToken] = useLocalStorage('auth-token');
+  
+  useEffect(() => {    
+    if (response) {
+      setToken(response.user.token);
+      setSubmitted(true);
+    }
+  }, [response, setToken])
 
   const pageText = isLogin ? 'Sign In' : 'Sign Up';
   const descriptionText = isLogin ? 'Need an account?' : 'Have an account?';
@@ -29,6 +38,10 @@ export const Auth = () => {
       data: { user }
     })
   };
+
+  if (isSubmitted) {
+    return <Redirect to={HOME} />;
+  }
 
   return (
     <div className="auth-page">
