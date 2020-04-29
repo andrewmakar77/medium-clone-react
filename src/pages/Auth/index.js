@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link, useLocation, Redirect } from 'react-router-dom';
 import { useAxios, useLocalStorage } from 'hooks';
 import { REGISTER, LOGIN, HOME } from 'constants/routes';
+import { CurrentUserContext } from 'contexts';
 
 export const Auth = () => {
   const { pathname } = useLocation();
@@ -13,13 +14,20 @@ export const Auth = () => {
   const [username, setUsername] = useState('');
   const [{isLoading, response}, doFetch] = useAxios(apiUrl);
   const [ , setToken] = useLocalStorage('auth-token');
+  const [ , setCurrentUserState] = useContext(CurrentUserContext);
   
   useEffect(() => {    
     if (response) {
       setToken(response.user.token);
+      setCurrentUserState(state => ({
+        ...state,
+        isLoading: false,
+        isLoggedIn: true,
+        currentUser: response.user
+      }));
       setSubmitted(true);
     }
-  }, [response, setToken])
+  }, [response, setToken, setCurrentUserState])
 
   const pageText = isLogin ? 'Sign In' : 'Sign Up';
   const descriptionText = isLogin ? 'Need an account?' : 'Have an account?';
