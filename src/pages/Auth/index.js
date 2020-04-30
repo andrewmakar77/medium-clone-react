@@ -3,7 +3,7 @@ import { Link, useLocation, Redirect } from 'react-router-dom';
 import { useAxios, useLocalStorage } from 'hooks';
 import { REGISTER, LOGIN, HOME } from 'constants/routes';
 import { CurrentUserContext } from 'contexts';
-import { ErrorMessages } from 'components';
+import { BackendErrorMessages } from 'components';
 
 export const Auth = () => {
   const { pathname } = useLocation();
@@ -62,7 +62,7 @@ export const Auth = () => {
               <Link to={descriptionLink}>{descriptionText}</Link>
             </p>
             <form onSubmit={handleSubmit}>
-              { errors && <ErrorMessages errors={errors.errors} /> }
+              { errors && <BackendErrorMessages errors={errors.errors} /> }
               <fieldset>
                 { !isLogin && (
                   <fieldset className="form-group">
