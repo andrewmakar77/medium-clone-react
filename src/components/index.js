@@ -12,3 +12,4 @@ export * from 'components/Tag';
 export * from 'components/Loading';
 export * from 'components/PopularTags';
 export * from 'components/FeedToggler';
+export * from 'components/EmptyList';
