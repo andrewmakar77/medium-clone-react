@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { HOME, ARTICLES, LOGIN, REGISTER, TAGS, ARTICLE_NEW, PROFILE, FEED } from 'constants/routes';
-import { GlobalFeeds, Articles, Auth, TagFeed } from 'pages';
+import { GlobalFeeds, Articles, Auth, TagFeed, YourFeed } from 'pages';
 
 export const Routes = () => {
   return (
@@ -13,7 +13,7 @@ export const Routes = () => {
       <Route path={`${TAGS}/:slug`} component={TagFeed} />
       <Route path={ARTICLE_NEW} component={() => <div>NEW ARTICLE</div>} />
       <Route path={PROFILE} component={() => <div>PROFILE</div>} />
-      <Route path={FEED} component={() => <div>MY FEED</div>} />
+      <Route path={FEED} component={YourFeed} />
     </Switch>
   )
 }

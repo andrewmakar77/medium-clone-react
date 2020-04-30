@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
-import { Banner, Feeds, ErrorMessage, Loading, EmptyList } from 'components';
+import { Banner, Feeds, ErrorMessage, Loading } from 'components';
 import { useAxios } from 'hooks';
-import { PopularTags, FeedToggler } from 'components';
+import { PopularTags, FeedToggler, EmptyList } from 'components';
 
-export const GlobalFeeds = () => {
-  const apiUrl = 'articles?limit=10&offset=0';
+export const YourFeed = () => {
+  const apiUrl = 'articles/feed?limit=10&offset=0';
   const [{isLoading, response, errors}, doFetch] = useAxios(apiUrl);
   
   useEffect(() => {
