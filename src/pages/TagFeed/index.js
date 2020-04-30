@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Banner, Feeds, ErrorMessage, Loading } from 'components';
+import { Banner, Feeds, ErrorMessage, Loading, EmptyList } from 'components';
 import { useAxios } from 'hooks';
 import { PopularTags, FeedToggler } from 'components';
 import { useParams } from 'react-router-dom';
@@ -24,6 +24,7 @@ export const TagFeed = () => {
               <FeedToggler tagName={tagName}/>
               {isLoading && <Loading/>}
               {errors && <ErrorMessage/>}
+              {!isLoading && response && !response.articles.length && <EmptyList/>}
               {!isLoading && response && <Feeds articles={response.articles} />}
             </div>
             <div className="col-md-3">
