@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
-import { Banner, Feeds } from 'components';
+import { Banner, Feeds, ErrorMessage, Loading } from 'components';
 import { useAxios } from 'hooks';
+import { PopularTags } from 'components';
 
 export const GlobalFeeds = () => {
   const apiUrl = 'articles?limit=10&offset=0';
@@ -13,14 +14,18 @@ export const GlobalFeeds = () => {
   return (
     <>
       <Banner/>
-      <div className="container page">
-        <div className="row">
-          <div className="col-md-9">
-            {isLoading && <div>Loading...</div>}
-            {errors && <div>Something went wrong!</div>}
-            {!isLoading && response && <Feeds articles={response.articles} />}
+      <div className="home-page">
+        <div className="container page">
+          <div className="row">
+            <div className="col-md-9">
+              {isLoading && <Loading/>}
+              {errors && <ErrorMessage/>}
+              {!isLoading && response && <Feeds articles={response.articles} />}
+            </div>
+            <div className="col-md-3">
+              <PopularTags/>
+            </div>
           </div>
-          <div className="col-md-3">Popular tags</div>
         </div>
       </div>
     </>
