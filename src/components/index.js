@@ -3,3 +3,8 @@ export * from 'components/NavigationList';
 export * from 'components/TopBar';
 export * from 'components/ErrorMessages';
 export * from 'components/CurrentUserChecker';
+export * from 'components/Banner';
+export * from 'components/Feeds';
+export * from 'components/Feed';
+export * from 'components/Tags';
+export * from 'components/Tag';
