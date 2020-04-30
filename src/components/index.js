@@ -11,3 +11,4 @@ export * from 'components/Tags';
 export * from 'components/Tag';
 export * from 'components/Loading';
 export * from 'components/PopularTags';
+export * from 'components/FeedToggler';

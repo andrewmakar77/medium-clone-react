@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Banner, Feeds, ErrorMessage, Loading } from 'components';
 import { useAxios } from 'hooks';
-import { PopularTags } from 'components';
+import { PopularTags, FeedToggler } from 'components';
 
 export const GlobalFeeds = () => {
   const apiUrl = 'articles?limit=10&offset=0';
@@ -18,6 +18,7 @@ export const GlobalFeeds = () => {
         <div className="container page">
           <div className="row">
             <div className="col-md-9">
+              <FeedToggler/>
               {isLoading && <Loading/>}
               {errors && <ErrorMessage/>}
               {!isLoading && response && <Feeds articles={response.articles} />}
