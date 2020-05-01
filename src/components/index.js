@@ -13,3 +13,4 @@ export * from 'components/Loading';
 export * from 'components/PopularTags';
 export * from 'components/FeedToggler';
 export * from 'components/EmptyList';
+export * from 'components/FavButton';

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Tags } from 'components';
+import { Tags, FavButton } from 'components';
 import { PROFILE, ARTICLES } from 'constants/routes';
 
 export const Feed = ({article}) => (
@@ -17,6 +17,9 @@ export const Feed = ({article}) => (
           {article.author.username}
         </Link>
         <span className="date">{article.createdAt}</span>
+      </div>
+      <div className="pull-xs-right">
+        <FavButton favoritesCount={article.favoritesCount}/>
       </div>
     </div>
     <Link to={`${ARTICLES}/${article.slug}`} className="preview-link">
